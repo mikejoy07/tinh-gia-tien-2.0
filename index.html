@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tính Giá Tiền</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ccc;
+    }
+    label, input, button {
+      display: block;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .result {
+      margin: 10px 0;
+      font-size: 16px;
+    }
+    .result strong {
+      display: inline-block;
+      width: 180px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Tính Giá Tiền</h2>
+  <label for="giaTien">Nhập giá tiền:</label>
+  <input type="number" id="giaTien" placeholder="Ví dụ: 100000" />
+  <button onclick="tinhToan()">Tính toán</button>
+
+  <div class="result"><strong>Giá gốc:</strong> <span id="giaGoc">-</span></div>
+  <div class="result"><strong>Giá sau khi nhân 2:</strong> <span id="sauNhan2">-</span></div>
+  <div class="result"><strong>Giá sau khi giảm 20%:</strong> <span id="sauGiam20">-</span></div>
+
+  <script>
+    function tinhToan() {
+      const giaGoc = parseFloat(document.getElementById("giaTien").value);
+      if (isNaN(giaGoc)) {
+        alert("Vui lòng nhập một số hợp lệ!");
+        return;
+      }
+      const nhanHai = giaGoc * 2;
+      const giam20 = nhanHai * 0.8;
+
+      document.getElementById("giaGoc").textContent = giaGoc.toLocaleString() + " VND";
+      document.getElementById("sauNhan2").textContent = nhanHai.toLocaleString() + " VND";
+      document.getElementById("sauGiam20").textContent = giam20.toLocaleString() + " VND";
+    }
+  </script>
+</body>
+</html>
