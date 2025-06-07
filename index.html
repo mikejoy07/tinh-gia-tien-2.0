@@ -5,12 +5,14 @@
   <title>Tính Giá Tiền</title>
   <style>
     body {
+      background-color: #000; /* Nền đen */
+      color: #fff; /* Chữ trắng */
       font-family: Arial, sans-serif;
       max-width: 400px;
       margin: 50px auto;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 0 10px #ccc;
+      box-shadow: 0 0 10px #444;
     }
     label, input, button {
       display: block;
@@ -20,6 +22,14 @@
     input {
       padding: 10px;
       font-size: 16px;
+      background-color: #222;
+      color: #fff;
+      border: 1px solid #555;
+      border-radius: 5px;
+    }
+    input:focus {
+      outline: none;
+      border-color: #4CAF50;
     }
     button {
       padding: 10px;
@@ -47,6 +57,8 @@
   <h2>Tính Giá Tiền</h2>
   <label for="giaTien">Nhập giá tiền:</label>
   <input type="number" id="giaTien" placeholder="Ví dụ: 100000" />
+
+  <!-- Nút này giữ lại phòng trường hợp người dùng không nhấn Enter -->
   <button onclick="tinhToan()">Tính toán</button>
 
   <div class="result"><strong>Giá gốc:</strong> <span id="giaGoc">-</span></div>
@@ -55,7 +67,8 @@
 
   <script>
     function tinhToan() {
-      const giaGoc = parseFloat(document.getElementById("giaTien").value);
+      const input = document.getElementById("giaTien");
+      const giaGoc = parseFloat(input.value);
       if (isNaN(giaGoc)) {
         alert("Vui lòng nhập một số hợp lệ!");
         return;
@@ -67,6 +80,7 @@
       document.getElementById("sauNhan2").textContent = nhanHai.toLocaleString() + " VND";
       document.getElementById("sauGiam20").textContent = giam20.toLocaleString() + " VND";
     }
-  </script>
-</body>
-</html>
+
+    // Thêm sự kiện nhấn Enter để tự động tính toán
+    document.getElementById("giaTien").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
