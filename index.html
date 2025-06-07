@@ -1,86 +1,75 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <title>Tính Giá Tiền</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tính giá bán sản phẩm</title>
   <style>
     body {
-      background-color: #000; /* Nền đen */
-      color: #fff;            /* Chữ trắng */
+      background-color: #121212;
+      color: #ffffff;
       font-family: Arial, sans-serif;
-      max-width: 400px;
-      margin: 50px auto;
       padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #444;
     }
-    label, input, button {
+
+    label, input {
       display: block;
-      width: 100%;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
+
     input {
-      padding: 10px;
-      font-size: 16px;
-      background-color: #222;
+      padding: 8px;
+      width: 200px;
+      background-color: #1e1e1e;
       color: #fff;
-      border: 1px solid #555;
-      border-radius: 5px;
+      border: 1px solid #333;
     }
-    input:focus {
-      outline: none;
-      border-color: #4CAF50;
-    }
-    button {
-      padding: 10px;
-      background-color: #4CAF50;
-      color: white;
-      font-size: 16px;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
+
     .result {
-      margin: 10px 0;
-      font-size: 16px;
-    }
-    .result strong {
-      display: inline-block;
-      width: 180px;
+      margin-top: 20px;
+      font-size: 18px;
+      color: #00ffcc;
     }
   </style>
 </head>
 <body>
-  <h2>Tính Giá Tiền</h2>
-  <label for="giaTien">Nhập giá tiền:</label>
-  <input type="number" id="giaTien" placeholder="Ví dụ: 100000" />
-  <button onclick="tinhToan()">Tính toán</button>
+  <h2>Tính giá bán sản phẩm</h2>
 
-  <div class="result"><strong>Giá gốc:</strong> <span id="giaGoc">-</span></div>
-  <div class="result"><strong>Giá sau khi nhân 2:</strong> <span id="sauNhan2">-</span></div>
-  <div class="result"><strong>Giá sau khi giảm 20%:</strong> <span id="sauGiam20">-</span></div>
+  <label for="giaNhap">Giá nhập sản phẩm:</label>
+  <input type="number" id="giaNhap" placeholder="Nhập giá nhập" />
+
+  <label for="soLuong">Số lượng sản phẩm:</label>
+  <input type="number" id="soLuong" placeholder="Ví dụ: 10" value="1" />
+
+  <label for="giamGia">Phần trăm giảm giá (%):</label>
+  <input type="number" id="giamGia" placeholder="Ví dụ: 10" value="0" />
+
+  <div class="result" id="ketQua"></div>
 
   <script>
-    function tinhToan() {
-      const giaGoc = parseFloat(document.getElementById("giaTien").value);
-      if (isNaN(giaGoc)) {
-        alert("Vui lòng nhập một số hợp lệ!");
-        return;
-      }
-      const nhanHai = giaGoc * 2;
-      const giam20 = nhanHai * 0.8;
+    const giaNhapEl = document.getElementById('giaNhap');
+    const soLuongEl = document.getElementById('soLuong');
+    const giamGiaEl = document.getElementById('giamGia');
+    const ketQuaEl = document.getElementById('ketQua');
 
-      document.getElementById("giaGoc").textContent = giaGoc.toLocaleString() + " VND";
-      document.getElementById("sauNhan2").textContent = nhanHai.toLocaleString() + " VND";
-      document.getElementById("sauGiam20").textContent = giam20.toLocaleString() + " VND";
+    function tinhToan() {
+      const giaNhap = parseFloat(giaNhapEl.value) || 0;
+      const soLuong = parseInt(soLuongEl.value) || 1;
+      const giamGia = parseFloat(giamGiaEl.value) || 0;
+
+      const giaBan = giaNhap * 1.5;
+      const tongGia = giaBan * soLuong;
+      const giaThiTruong = tongGia * (1 - giamGia / 100);
+
+      ketQuaEl.innerHTML = `
+        Giá bán 1 sản phẩm: ${giaBan.toLocaleString()}<br>
+        Tổng giá bán (${soLuong} sản phẩm): ${tongGia.toLocaleString()}<br>
+        Giá bán thị trường sau giảm ${giamGia}%: ${giaThiTruong.toLocaleString()}
+      `;
     }
 
-    // Bắt sự kiện Enter để tự tính
-    document.getElementById("giaTien").addEventListener("keydown", function(event) {
-      if (event.key === "Enter") {
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
         tinhToan();
       }
     });
